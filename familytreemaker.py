@@ -59,6 +59,10 @@ class Person:
 			attr = map(lambda x: x.strip(), attr.split(','))
 			for a in attr:
 				if '=' in a:
+					if len(a.split('=')) > 2:
+						print("Wrong split: attr=", a)
+						print(f"Wrong split: {a}")
+						exit(42)
 					k, v = a.split('=')
 					self.attr[k] = v
 				else:
@@ -112,7 +116,7 @@ class Household:
 		self.parents = []
 		self.kids = []
 		self.id = 0
-	
+
 	def __str__(self):
 		return	'Family:\n' + \
 				'\tparents  = ' + ', '.join(map(str, self.parents)) + '\n' \
@@ -179,7 +183,7 @@ class Family:
 			if p.name == name:
 				return p
 		return None
-		
+
 	def populate(self, f):
 		"""Reads the input file line by line, to find persons and unions.
 
@@ -215,7 +219,7 @@ class Family:
 		This function is not very good, because we can have many persons with
 		no parents, it will always return the first found. A better practice
 		would be to return the one with the highest number of descendant.
-		
+
 		"""
 		for p in self.everybody.values():
 			if len(p.parents) == 0:
